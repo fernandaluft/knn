@@ -31,5 +31,3 @@ def rootpage():
         recommendations = rec(movie)
     return render_template('index.html', recommendations=recommendations)
 
-
-app.run()
