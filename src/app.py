@@ -16,18 +16,28 @@ vector = TfidfVectorizer().fit_transform(df['tags'])
 
 def rec(movie):
     recs = []
-    movie_index = df[df['title'] == movie].index[0]
-    distances, indices = model.kneighbors(vector[movie_index], n_neighbors=6)
-    similar_movies = [(df['title'][i], distances[0][j]) for j, i in enumerate(indices[0])]
-    for m in range(1, len(similar_movies)):
-        recs.append(similar_movies[m][0])
+    if movie not in df['title'].values:
+        return 'Movie not in database, please choose another one'
+    else:
+
+        movie_index = df[df['title'] == movie].index[0]
+        distances, indices = model.kneighbors(vector[movie_index], n_neighbors=6)
+        similar_movies = [(df['title'][i], distances[0][j]) for j, i in enumerate(indices[0])]
+        for m in range(1, len(similar_movies)):
+            recs.append(similar_movies[m][0])
     return recs
 
 @app.route('/', methods=['GET', 'POST'])
 def rootpage():
+    movie = ''
     recommendations = []
+    movie_not_in_database = None
+
     if request.method == 'POST' and 'movie' in request.form:
         movie = request.form.get('movie')
-        recommendations = rec(movie)
-    return render_template('index.html', recommendations=recommendations)
+        if movie not in df['title'].values:
+            movie_not_in_database = 'Movie not in database, please choose another one'
+        else:
+            recommendations = rec(movie)
 
+    return render_template('index.html', movie=movie, recommendations=recommendations, movie_not_in_database=movie_not_in_database)
