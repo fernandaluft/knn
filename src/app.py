@@ -6,8 +6,8 @@ from sklearn.neighbors import NearestNeighbors
 
 app = Flask(__name__)
 
-df = pd.read_csv('../4Geeks/movies_processed.csv')
-model = load(open("../4Geeks/knn_neighbors_project.sav", "rb"))
+df = pd.read_csv('movies_processed.csv')
+model = load(open("knn_neighbors_project.sav", "rb"))
 df.fillna('', inplace=True)
 vector = TfidfVectorizer().fit_transform(df['tags'])
 
