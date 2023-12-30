@@ -11,4 +11,3 @@ requests>=2.27.1
 scikit-learn
 sympy>=1.10.1
 flask
-pickle
