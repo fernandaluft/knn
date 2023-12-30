@@ -1,3 +1,6 @@
+import os
+os.environ['FLASK_ENV'] = 'production'
+
 from flask import Flask, render_template, request, redirect, url_for
 from pickle import load
 import pandas as pd
