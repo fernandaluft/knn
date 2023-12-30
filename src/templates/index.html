@@ -16,13 +16,15 @@
             <button type="submit" class="pure-button pure-button-primary">Submit</button>
         </form>
 
-        {% if recommendations %}
-            <h4>Movies you might also like:</h4>
-            <ul>
-                {% for movie in recommendations %}
-                    <li>{{ movie }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    {% if recommendations %}
+        <h5>Movies you might like:</h5>
+        <ul>
+            {% for movie in recommendations %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    {% elif movie_not_in_database %}
+        <p>{{ movie_not_in_database }}</p>
+    {% endif %}
     </div>
 </body>
